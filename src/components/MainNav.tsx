@@ -5,6 +5,8 @@ import UsernameMenu from "./UsernameMenu";
 const MainNav = () => {
     const { loginWithRedirect, isAuthenticated } = useAuth0();
 
+    console.log("Auth0 authenticated ", isAuthenticated);
+
     return (
         <span className="flex space-x-2 items-center">
             {isAuthenticated ? (

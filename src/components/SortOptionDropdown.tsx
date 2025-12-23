@@ -1,7 +1,7 @@
-import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { Button } from "./ui/button";
 import {
     DropdownMenu,
+    DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
@@ -34,7 +34,7 @@ const SortOptionDropdown = ({ onChange, sortOption }: Props) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="cursor-pointer">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="">
                     Sort by: {selectedSortLabel}
                 </Button>
             </DropdownMenuTrigger>
