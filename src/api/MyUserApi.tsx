@@ -67,6 +67,8 @@ export const useCreateMyUser = () => {
         if (!response.ok) {
             throw new Error("Failed to create user");
         }
+
+        return response.json();
     };
 
     const {
