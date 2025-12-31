@@ -76,6 +76,22 @@ const DetailsPage = () => {
         );
     };
 
+    const onDecrement = (menuItemId: string) => {
+        setCartItems((prev) =>
+            prev
+                .map((i) =>
+                    i._id === menuItemId
+                        ? { ...i, quantity: i.quantity - 1 }
+                        : i
+                )
+                .filter((i) => i.quantity > 0)
+        );
+    };
+
+    const getItemCount = (menuItemId: string) => {
+        return cartItems.find((item) => item._id === menuItemId)?.quantity || 0;
+    };
+
     const onCheckout = async (userFormData: UserFormData) => {
         if (!restaurant) {
             return;
@@ -122,7 +138,9 @@ const DetailsPage = () => {
                     {restaurant.menuItems.map((menuItem) => (
                         <MenuItem
                             menuItem={menuItem}
-                            addToCart={() => addToCart(menuItem)}
+                            onAdd={() => addToCart(menuItem)}
+                            onRemove={() => onDecrement(menuItem._id)}
+                            count={getItemCount(menuItem._id)}
                         />
                     ))}
                 </div>

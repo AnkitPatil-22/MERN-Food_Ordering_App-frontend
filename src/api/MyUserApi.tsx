@@ -36,7 +36,7 @@ export const useGetMyUser = () => {
     });
 
     if (error) {
-        toast.error(error.toString());
+        // toast.error(error.toString());
     }
 
     return {

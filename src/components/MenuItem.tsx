@@ -1,20 +1,28 @@
 import type { MenuItemType } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import MenuItemCounter from "./MenuItemCounter";
 
 type Props = {
     menuItem: MenuItemType;
-    addToCart: () => void;
+    count: number;
+    onAdd: () => void;
+    onRemove: () => void;
 };
 
-const MenuItem = ({ menuItem, addToCart }: Props) => {
+const MenuItem = ({ menuItem, onAdd, onRemove, count }: Props) => {
     return (
-        <Card className="cursor-pointer" onClick={addToCart}>
+        <Card className="relative">
             <CardHeader>
                 <CardTitle>{menuItem.name}</CardTitle>
             </CardHeader>
             <CardContent className="font-bold">
                 ₹{(menuItem.price / 100).toFixed(2)}
             </CardContent>
+            <MenuItemCounter
+                onIncrement={onAdd}
+                onDecrement={onRemove}
+                count={count}
+            />
         </Card>
     );
 };
