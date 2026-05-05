@@ -1,3 +1,4 @@
+import React from "react";
 import {
     Pagination,
     PaginationContent,
@@ -54,4 +55,4 @@ const PaginationSelector = ({ page, pages, onPageChange }: Props) => {
     );
 };
 
-export default PaginationSelector;
+export default React.memo(PaginationSelector);

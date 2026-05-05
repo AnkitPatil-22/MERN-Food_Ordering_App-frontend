@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "./ui/button";
 import {
     DropdownMenu,
@@ -52,4 +53,4 @@ const SortOptionDropdown = ({ onChange, sortOption }: Props) => {
     );
 };
 
-export default SortOptionDropdown;
+export default React.memo(SortOptionDropdown);

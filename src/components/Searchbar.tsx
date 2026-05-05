@@ -5,7 +5,7 @@ import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Search } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 const formSchema = z.object({
     searchQuery: z.string({
@@ -89,4 +89,4 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }: Props) => {
     );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);

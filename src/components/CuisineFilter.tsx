@@ -3,6 +3,7 @@ import { Label } from "./ui/label";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import type { ChangeEvent } from "react";
 import { Button } from "./ui/button";
+import React from "react";
 
 type Props = {
     onChange: (cuisines: string[]) => void;
@@ -96,4 +97,4 @@ const CuisineFilter = ({
     );
 };
 
-export default CuisineFilter;
+export default React.memo(CuisineFilter);
