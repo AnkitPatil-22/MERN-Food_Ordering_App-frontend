@@ -1,13 +1,17 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { lazy } from "react";
+
 import Layout from "./layouts/layout";
-import HomePage from "./pages/HomePage";
-import AuthCallbackPage from "./pages/AuthCallbackPage";
-import UserProfilePage from "./pages/UserProfilePage";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
-import ManageRestaurantPage from "./pages/ManageRestaurantPage";
-import SearchPage from "./pages/SearchPage";
-import DetailsPage from "./pages/DetailsPage";
-import OrderStatusPage from "./pages/OrderStatusPage";
+import AuthCallbackPage from "./pages/AuthCallbackPage";
+
+// LAZY IMPORTS (Code Splitting)
+const HomePage = lazy(() => import("./pages/HomePage"));
+const SearchPage = lazy(() => import("./pages/SearchPage"));
+const DetailsPage = lazy(() => import("./pages/DetailsPage"));
+const UserProfilePage = lazy(() => import("./pages/UserProfilePage"));
+const ManageRestaurantPage = lazy(() => import("./pages/ManageRestaurantPage"));
+const OrderStatusPage = lazy(() => import("./pages/OrderStatusPage"));
 
 const AppRoutes = () => {
     return (
