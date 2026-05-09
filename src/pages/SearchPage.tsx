@@ -71,16 +71,12 @@ const SearchPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
             {/* Sidebar */}
             <div id="cuisines-list">
-                {isPending ? (
-                    <CuisineFilterSkeleton />
-                ) : (
-                    <CuisineFilter
-                        selectedCuisines={searchState.selectedCuisines}
-                        onChange={setSelectedCuisines}
-                        isExpanded={isExpanded}
-                        onExpandedClick={handleExpandedClick}
-                    />
-                )}
+                <CuisineFilter
+                    selectedCuisines={searchState.selectedCuisines}
+                    onChange={setSelectedCuisines}
+                    isExpanded={isExpanded}
+                    onExpandedClick={handleExpandedClick}
+                />
             </div>
 
             {/* Main */}
