@@ -8,7 +8,6 @@ import SearchResultInfo from "@/components/SearchResultInfo";
 import SortOptionDropdown from "@/components/SortOptionDropdown";
 import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
-import CuisineFilterSkeleton from "@/components/skeletons/CuisineFilterSkeleton";
 
 export type SearchState = {
     searchQuery: string;
