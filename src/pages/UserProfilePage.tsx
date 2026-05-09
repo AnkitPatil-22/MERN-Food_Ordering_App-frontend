@@ -1,24 +1,38 @@
 import { useGetMyUser, useUpdateMyUser } from "@/api/MyUserApi";
-import UserProfileForm from "@/components/forms/user-profile-form/UserProfileForm";
+import UserProfileSkeleton from "@/components/skeletons/UserProfileSkeleton";
+import { lazy, Suspense } from "react";
+
+const UserProfileForm = lazy(
+    () => import("@/components/forms/user-profile-form/UserProfileForm"),
+);
 
 const UserProfilePage = () => {
     const { currentUser, isPending: isLoadingUser } = useGetMyUser();
     const { updateUser, isPending: isUpdatingUser } = useUpdateMyUser();
 
     if (isLoadingUser) {
-        return <span>Loading...</span>;
+        return <UserProfileSkeleton />;
     }
 
     if (!currentUser) {
-        return <span>Unable to load user profile</span>;
+        return (
+            <div className="p-10 text-center">
+                <h2 className="text-xl font-semibold">
+                    Unable to load user profile
+                </h2>
+                <p className="text-gray-500">Please try refreshing the page.</p>
+            </div>
+        );
     }
 
     return (
-        <UserProfileForm
-            currentUser={currentUser}
-            onSave={updateUser}
-            isLoading={isUpdatingUser}
-        />
+        <Suspense fallback={<UserProfileSkeleton />}>
+            <UserProfileForm
+                currentUser={currentUser}
+                onSave={updateUser}
+                isLoading={isUpdatingUser}
+            />
+        </Suspense>
     );
 };
 

@@ -1,14 +1,16 @@
 import hero from "../assets/hero.png";
+import { AspectRatio } from "./ui/aspect-ratio";
 
 const Hero = () => {
     return (
-        <div>
+        <AspectRatio ratio={16 / 6}>
             <img
                 src={hero}
                 alt="burger and fries background"
-                className="w-full max-h-[600 px] object-cover"
+                className="w-full h-full object-cover"
+                fetchPriority="high"
             />
-        </div>
+        </AspectRatio>
     );
 };
 

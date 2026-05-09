@@ -1,6 +1,7 @@
 import type { MenuItemType } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import MenuItemCounter from "./MenuItemCounter";
+import { memo } from "react";
 
 type Props = {
     menuItem: MenuItemType;
@@ -27,4 +28,4 @@ const MenuItem = ({ menuItem, onAdd, onRemove, count }: Props) => {
     );
 };
 
-export default MenuItem;
+export default memo(MenuItem);

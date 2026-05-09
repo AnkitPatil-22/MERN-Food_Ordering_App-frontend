@@ -1,17 +1,23 @@
 import { useGetMyOrders } from "@/api/OrderApi";
 import OrderStatusDetail from "@/components/OrderStatusDetail";
 import OrderStatusHeader from "@/components/OrderStatusHeader";
+import OrderStatusSkeleton from "@/components/skeletons/OrderStatusSkeleton";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const OrderStatusPage = () => {
     const { orders, isPending } = useGetMyOrders();
 
     if (isPending) {
-        return "Loading...";
+        return <OrderStatusSkeleton />;
     }
 
     if (!orders || orders.length == 0) {
-        return "No orders found";
+        return (
+            <div className="text-center py-10">
+                <h2 className="text-xl font-semibold">No orders found</h2>
+                <p className="text-gray-500">Go order some delicious food!</p>
+            </div>
+        );
     }
 
     return (

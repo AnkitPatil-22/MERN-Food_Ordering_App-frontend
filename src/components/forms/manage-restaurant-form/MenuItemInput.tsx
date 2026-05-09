@@ -7,6 +7,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { memo } from "react";
 import { useFormContext } from "react-hook-form";
 
 type Props = {
@@ -66,4 +67,4 @@ const MenuItemInput = ({ index, removeMenuItem }: Props) => {
     );
 };
 
-export default MenuItemInput;
+export default memo(MenuItemInput);

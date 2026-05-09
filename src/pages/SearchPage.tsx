@@ -3,7 +3,7 @@ import CuisineFilter from "@/components/CuisineFilter";
 import PaginationSelector from "@/components/PaginationSelector";
 import SearchBar, { type SearchForm } from "@/components/Searchbar";
 import SearchResultCard from "@/components/SearchResultCard";
-import SearchResultCardSkeleton from "@/components/SearchResultCardSkeleton";
+import SearchResultCardSkeleton from "@/components/skeletons/SearchResultCardSkeleton";
 import SearchResultInfo from "@/components/SearchResultInfo";
 import SortOptionDropdown from "@/components/SortOptionDropdown";
 import { useCallback, useState } from "react";

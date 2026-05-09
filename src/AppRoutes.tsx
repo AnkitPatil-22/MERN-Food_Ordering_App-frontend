@@ -1,9 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 
 import Layout from "./layouts/layout";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
 import AuthCallbackPage from "./pages/AuthCallbackPage";
+import DetailsSkeleton from "./components/skeletons/DetailsSkeleton";
+import HomeSkeleton from "./components/skeletons/HomeSkeleton";
 
 // LAZY IMPORTS (Code Splitting)
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -20,7 +22,9 @@ const AppRoutes = () => {
                 path="/"
                 element={
                     <Layout showHero>
-                        <HomePage />
+                        <Suspense fallback={<HomeSkeleton />}>
+                            <HomePage />
+                        </Suspense>{" "}
                     </Layout>
                 }
             />
@@ -37,7 +41,9 @@ const AppRoutes = () => {
                 path="/detail/:restaurantId"
                 element={
                     <Layout showHero={false}>
-                        <DetailsPage />
+                        <Suspense fallback={<DetailsSkeleton />}>
+                            <DetailsPage />
+                        </Suspense>
                     </Layout>
                 }
             />

@@ -5,6 +5,7 @@ import type { UserFormData } from "@/components/forms/user-profile-form/UserProf
 import MenuItem from "@/components/MenuItem";
 import OrderSummary from "@/components/OrderSummary";
 import RestaurantInfo from "@/components/RestaurantInfo";
+import DetailsSkeleton from "@/components/skeletons/DetailsSkeleton";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardFooter } from "@/components/ui/card";
 import type { MenuItemType } from "@/types";
@@ -27,7 +28,7 @@ const DetailsPage = () => {
 
     const [cartItems, setCartItems] = useState<CartItem[]>(() => {
         const storedCartItems = sessionStorage.getItem(
-            `cartItems-${restaurantId}`
+            `cartItems-${restaurantId}`,
         );
         return storedCartItems ? JSON.parse(storedCartItems) : [];
     });
@@ -36,7 +37,7 @@ const DetailsPage = () => {
         setCartItems((prevCartItems) => {
             // 1. check if the item is already in the cart
             const existingCartItem = prevCartItems.find(
-                (cartItem) => cartItem._id === menuItem._id
+                (cartItem) => cartItem._id === menuItem._id,
             );
 
             let updatedCartItems;
@@ -45,7 +46,7 @@ const DetailsPage = () => {
                 updatedCartItems = prevCartItems.map((cartItem) =>
                     cartItem._id === menuItem._id
                         ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                        : cartItem
+                        : cartItem,
                 );
             }
             // 3. if item is not in cart, add it as a new item
@@ -63,7 +64,7 @@ const DetailsPage = () => {
 
             sessionStorage.setItem(
                 `cartItems-${restaurantId}`,
-                JSON.stringify(updatedCartItems)
+                JSON.stringify(updatedCartItems),
             );
 
             return updatedCartItems;
@@ -72,7 +73,7 @@ const DetailsPage = () => {
 
     const removeFromCart = (menItem: MenuItemType) => {
         setCartItems((prevCartItems) =>
-            prevCartItems.filter((cartItem) => cartItem._id !== menItem._id)
+            prevCartItems.filter((cartItem) => cartItem._id !== menItem._id),
         );
     };
 
@@ -82,9 +83,9 @@ const DetailsPage = () => {
                 .map((i) =>
                     i._id === menuItemId
                         ? { ...i, quantity: i.quantity - 1 }
-                        : i
+                        : i,
                 )
-                .filter((i) => i.quantity > 0)
+                .filter((i) => i.quantity > 0),
         );
     };
 
@@ -118,7 +119,7 @@ const DetailsPage = () => {
     };
 
     if (isRestaurantLoading || !restaurant) {
-        return "Loading...";
+        return <DetailsSkeleton />;
     }
 
     return (
@@ -137,6 +138,7 @@ const DetailsPage = () => {
                     </span>
                     {restaurant.menuItems.map((menuItem) => (
                         <MenuItem
+                            key={menuItem._id}
                             menuItem={menuItem}
                             onAdd={() => addToCart(menuItem)}
                             onRemove={() => onDecrement(menuItem._id)}

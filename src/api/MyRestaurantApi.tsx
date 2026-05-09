@@ -37,7 +37,7 @@ export const useCreateMyRestaurant = () => {
     const { getAccessTokenSilently } = useAuth0();
 
     const createMyRestaurantRequest = async (
-        restaurantFormData: FormData
+        restaurantFormData: FormData,
     ): Promise<Restaurant> => {
         const accessToken = await getAccessTokenSilently();
 
@@ -78,7 +78,7 @@ export const useUpdateMyRestaurant = () => {
     const { getAccessTokenSilently } = useAuth0();
 
     const updateMyRestaurantRequest = async (
-        restaurantFormData: FormData
+        restaurantFormData: FormData,
     ): Promise<Restaurant> => {
         const accessToken = await getAccessTokenSilently();
 
@@ -136,7 +136,7 @@ export const useGetMyRestaurantOrders = () => {
                     Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/json",
                 },
-            }
+            },
         );
 
         if (!response) {
@@ -146,7 +146,11 @@ export const useGetMyRestaurantOrders = () => {
         return response.json();
     };
 
-    const { data: orders, isLoading } = useQuery({
+    const {
+        data: orders,
+        isLoading,
+        isPending,
+    } = useQuery({
         queryKey: ["fetchMyRestaurantOrders"],
         queryFn: getMyRestaurantOrdersRequest,
     });
@@ -154,6 +158,7 @@ export const useGetMyRestaurantOrders = () => {
     return {
         orders,
         isLoading,
+        isPending,
     };
 };
 
@@ -166,7 +171,7 @@ export const useUpdateMyRestaurantOrder = () => {
     const { getAccessTokenSilently } = useAuth0();
 
     const updateMyRestaurantOrder = async (
-        updateStatusOrderRequest: UpdateOrderStatusRequest
+        updateStatusOrderRequest: UpdateOrderStatusRequest,
     ) => {
         const accessToken = await getAccessTokenSilently();
 
@@ -181,7 +186,7 @@ export const useUpdateMyRestaurantOrder = () => {
                 body: JSON.stringify({
                     status: updateStatusOrderRequest.status,
                 }),
-            }
+            },
         );
 
         if (!response.ok) {
