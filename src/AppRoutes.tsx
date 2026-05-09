@@ -6,6 +6,7 @@ import ProtectedRoutes from "./auth/ProtectedRoutes";
 import AuthCallbackPage from "./pages/AuthCallbackPage";
 import DetailsSkeleton from "./components/skeletons/DetailsSkeleton";
 import HomeSkeleton from "./components/skeletons/HomeSkeleton";
+import SearchPageSkeleton from "./components/skeletons/SearchPageSkeleton";
 
 // LAZY IMPORTS (Code Splitting)
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -33,7 +34,9 @@ const AppRoutes = () => {
                 path="/search/:city"
                 element={
                     <Layout showHero={false}>
-                        <SearchPage />
+                        <Suspense fallback={<SearchPageSkeleton />}>
+                            <SearchPage />
+                        </Suspense>
                     </Layout>
                 }
             />
