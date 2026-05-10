@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import {
     useCreateMyRestaurant,
     useGetMyRestaurant,
@@ -23,6 +23,14 @@ const ManageRestaurantPage = () => {
     const { updateRestaurant, isPending: isUpdateLoading } =
         useUpdateMyRestaurant();
     const { orders, isPending: isOrdersLoading } = useGetMyRestaurantOrders();
+
+    const groupedOrders = useMemo(() => {
+        if (!orders) return { active: [], completed: [] };
+        return {
+            active: orders.filter((o) => o.status !== "delivered"),
+            completed: orders.filter((o) => o.status === "delivered"),
+        };
+    }, [orders]);
 
     const isEditing = !!restaurant;
 
@@ -54,12 +62,26 @@ const ManageRestaurantPage = () => {
                     <OrdersSkeleton />
                 ) : (
                     <div className="space-y-5 bg-gray-50 p-10 rounded-lg">
-                        <h2 className="text-2xl font-bold">
-                            {orders?.length} active orders
+                        <h2 className="text-2xl font-bold underline">
+                            Active Orders ({groupedOrders.active.length})
                         </h2>
-                        {orders?.map((order) => (
-                            <OrderItemCard order={order} />
+                        {groupedOrders.active.map((order) => (
+                            <OrderItemCard key={order._id} order={order} />
                         ))}
+
+                        {groupedOrders.completed.length > 0 && (
+                            <>
+                                <h2 className="text-2xl font-bold underline pt-10">
+                                    Completed Orders
+                                </h2>
+                                {groupedOrders.completed.map((order) => (
+                                    <OrderItemCard
+                                        key={order._id}
+                                        order={order}
+                                    />
+                                ))}
+                            </>
+                        )}
                     </div>
                 )}
             </TabsContent>

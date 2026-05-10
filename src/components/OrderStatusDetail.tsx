@@ -6,8 +6,21 @@ type Props = {
 };
 
 const OrderStatusDetail = ({ order }: Props) => {
+    const formattedDate = new Date(order.createdAt).toLocaleDateString(
+        undefined,
+        {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        },
+    );
+
     return (
         <div className="space-y-5">
+            <div className="flex flex-col">
+                <span className="font-bold">Order Date:</span>
+                <span>{formattedDate}</span>
+            </div>
             <div className="flex flex-col">
                 <span className="font-bold">Delivering to:</span>
                 <span>{order.deliveryDetails.name}</span>

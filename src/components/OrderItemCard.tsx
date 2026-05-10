@@ -26,6 +26,16 @@ const OrderItemCard = ({ order }: Props) => {
         setStatus(order.status);
     }, [order.status]);
 
+    const currentStatusIndex = ORDER_STATUS.findIndex(
+        (s) => s.value === status,
+    );
+
+    const orderDate = new Date(order.createdAt).toLocaleDateString(undefined, {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+    });
+
     const handleStatusChange = async (newStatus: OrderStatus) => {
         await updateRestaurantStatus({
             orderId: order._id as string,
@@ -49,6 +59,10 @@ const OrderItemCard = ({ order }: Props) => {
         <Card>
             <CardHeader>
                 <CardTitle className="grid md:grid-cols-4 gap-4 justify-between mb-3">
+                    <div>
+                        Order Date:
+                        <span className="ml-2 font-normal">{orderDate}</span>
+                    </div>
                     <div>
                         Customer Name:
                         <span className="ml-2 font-normal">
@@ -92,7 +106,7 @@ const OrderItemCard = ({ order }: Props) => {
                     </Label>
                     <Select
                         value={status}
-                        disabled={isPending}
+                        disabled={isPending || status === "delivered"}
                         onValueChange={(value) =>
                             handleStatusChange(value as OrderStatus)
                         }
@@ -101,11 +115,19 @@ const OrderItemCard = ({ order }: Props) => {
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent position="popper">
-                            {ORDER_STATUS.map((status) => (
-                                <SelectItem value={status.value}>
-                                    {status.label}
-                                </SelectItem>
-                            ))}
+                            {ORDER_STATUS.map((s, index) => {
+                                const isPastStatus =
+                                    index <= currentStatusIndex;
+                                return (
+                                    <SelectItem
+                                        key={s.value}
+                                        value={s.value}
+                                        disabled={isPastStatus}
+                                    >
+                                        {s.label}
+                                    </SelectItem>
+                                );
+                            })}
                         </SelectContent>
                     </Select>
                 </div>
