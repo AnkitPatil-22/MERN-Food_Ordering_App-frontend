@@ -16,7 +16,7 @@ export const useGetMyOrders = () => {
             },
         });
 
-        if (!response) {
+        if (!response.ok) {
             throw new Error("Failed to fetch orders");
         }
 
@@ -54,7 +54,7 @@ export const useCreateCkeckoutSession = () => {
     const { getAccessTokenSilently } = useAuth0();
 
     const createCkeckoutSessionRequest = async (
-        checkoutSessionRequest: CheckoutSessionRequest
+        checkoutSessionRequest: CheckoutSessionRequest,
     ) => {
         const accessToken = await getAccessTokenSilently();
 
@@ -67,7 +67,7 @@ export const useCreateCkeckoutSession = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(checkoutSessionRequest),
-            }
+            },
         );
 
         if (!response.ok) {
@@ -80,16 +80,14 @@ export const useCreateCkeckoutSession = () => {
     const {
         mutateAsync: createCheckoutSession,
         isPending,
-        error,
         reset,
     } = useMutation({
         mutationFn: createCkeckoutSessionRequest,
+        onError: (err) => {
+            toast.error(err.toString());
+            reset();
+        },
     });
-
-    if (error) {
-        toast.error(error.toString());
-        reset();
-    }
 
     return {
         createCheckoutSession,

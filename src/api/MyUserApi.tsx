@@ -26,18 +26,10 @@ export const useGetMyUser = () => {
         return response.json();
     };
 
-    const {
-        data: currentUser,
-        isPending,
-        error,
-    } = useQuery({
+    const { data: currentUser, isPending } = useQuery({
         queryKey: ["fetchCurrentUser"],
         queryFn: getMyUserRequest,
     });
-
-    if (error) {
-        // toast.error(error.toString());
-    }
 
     return {
         currentUser,

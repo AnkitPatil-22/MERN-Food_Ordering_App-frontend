@@ -56,20 +56,15 @@ export const useCreateMyRestaurant = () => {
         return response.json();
     };
 
-    const {
-        mutate: createRestaurant,
-        isPending,
-        isSuccess,
-        error,
-    } = useMutation({ mutationFn: createMyRestaurantRequest });
-
-    if (isSuccess) {
-        toast.success("Restaurant created!");
-    }
-
-    if (error) {
-        toast.error("Unable to update restaurant");
-    }
+    const { mutate: createRestaurant, isPending } = useMutation({
+        mutationFn: createMyRestaurantRequest,
+        onSuccess: () => {
+            toast.success("Restaurant created!");
+        },
+        onError: () => {
+            toast.error("Unable to update restaurant");
+        },
+    });
 
     return { createRestaurant, isPending };
 };
@@ -90,7 +85,7 @@ export const useUpdateMyRestaurant = () => {
             body: restaurantFormData,
         });
 
-        if (!response) {
+        if (!response.ok) {
             throw new Error("Failed to update restaurant");
         }
 
@@ -100,22 +95,17 @@ export const useUpdateMyRestaurant = () => {
     const {
         mutateAsync: updateRestaurant,
         isPending,
-        isSuccess,
-        error,
-        isError,
         reset,
     } = useMutation({
         mutationFn: updateMyRestaurantRequest,
+        onSuccess: () => {
+            toast.success("Restaurant updated.");
+        },
+        onError: (err) => {
+            toast.error(err.toString());
+            reset();
+        },
     });
-
-    if (isSuccess) {
-        toast.success("Restaurant updated.");
-    }
-
-    if (isError) {
-        toast.error(error.toString());
-        reset();
-    }
 
     return {
         updateRestaurant,
@@ -139,7 +129,7 @@ export const useGetMyRestaurantOrders = () => {
             },
         );
 
-        if (!response) {
+        if (!response.ok) {
             throw new Error("Failed to fetch orders");
         }
 
@@ -199,19 +189,17 @@ export const useUpdateMyRestaurantOrder = () => {
     const {
         mutateAsync: updateRestaurantStatus,
         isPending,
-        isError,
-        isSuccess,
         reset,
-    } = useMutation({ mutationFn: updateMyRestaurantOrder });
-
-    if (isSuccess) {
-        toast.success("Order updated");
-    }
-
-    if (isError) {
-        toast.error("Unable to update order");
-        reset();
-    }
+    } = useMutation({
+        mutationFn: updateMyRestaurantOrder,
+        onSuccess: () => {
+            toast.success("Order updated");
+        },
+        onError: () => {
+            toast.error("Unable to update order");
+            reset();
+        },
+    });
 
     return { updateRestaurantStatus, isPending };
 };
